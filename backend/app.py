@@ -36,6 +36,7 @@ from routes.proctoring import proctoring_bp
 from routes.analytics import analytics_bp
 from routes.reports import reports_bp
 from routes.gd import gd_bp
+from routes.resume import resume_bp
 
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
 app.register_blueprint(interview_bp, url_prefix='/api/interview')
@@ -45,6 +46,7 @@ app.register_blueprint(proctoring_bp, url_prefix='/api/proctoring')
 app.register_blueprint(analytics_bp, url_prefix='/api/analytics')
 app.register_blueprint(reports_bp, url_prefix='/api/reports')
 app.register_blueprint(gd_bp, url_prefix='/api/gd')
+app.register_blueprint(resume_bp, url_prefix='/api/resume')
 
 @app.route('/api/health', methods=['GET'])
 def health_check():

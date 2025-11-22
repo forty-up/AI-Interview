@@ -239,7 +239,7 @@ const Interview = () => {
         </p>
         <div className="flex gap-4 justify-center">
           <button
-            onClick={() => navigate(`/interview/${interviewId}`)}
+            onClick={() => navigate(`/dashboard/interview/${interviewId}`)}
             className="btn-primary"
           >
             View Results

@@ -55,7 +55,7 @@ const LandingPage = () => {
                 <span className="text-white font-bold text-sm">AI</span>
               </div>
               <span className="text-lg font-semibold text-gray-900 dark:text-white">
-                InterviewPrep
+                PlacementPrep
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -104,10 +104,6 @@ const LandingPage = () => {
                 Start Practicing
                 <FiArrowRight className="w-4 h-4" />
               </Link>
-              <button className="inline-flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg font-medium border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <FiPlay className="w-4 h-4" />
-                Watch Demo
-              </button>
             </div>
           </div>
         </div>
@@ -243,10 +239,10 @@ const LandingPage = () => {
             <div className="w-6 h-6 bg-primary-600 rounded flex items-center justify-center">
               <span className="text-white font-bold text-xs">AI</span>
             </div>
-            <span className="text-sm font-medium text-gray-900 dark:text-white">InterviewPrep</span>
+            <span className="text-sm font-medium text-gray-900 dark:text-white">PlacementPrep</span>
           </div>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            © 2024 All rights reserved
+            © 2025 All rights reserved
           </p>
         </div>
       </footer>

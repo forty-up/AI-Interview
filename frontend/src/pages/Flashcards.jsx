@@ -49,7 +49,7 @@ const Flashcards = () => {
     try {
       const response = await flashcardApi.generate(formData)
       toast.success('Flashcards generated!')
-      navigate(`/flashcards/${response.data.flashcard_id}`)
+      navigate(`/dashboard/flashcards/${response.data.flashcard_id}`)
     } catch (error) {
       toast.error('Failed to generate flashcards')
     } finally {

@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import {
   FiHome, FiVideo, FiBook, FiHelpCircle, FiBarChart2,
-  FiUsers, FiUser, FiLogOut, FiSun, FiMoon, FiFileText
+  FiUsers, FiUser, FiLogOut, FiSun, FiMoon, FiFileText, FiFile
 } from 'react-icons/fi'
 
 const Layout = () => {
@@ -16,6 +16,7 @@ const Layout = () => {
     { name: 'Interview', path: '/dashboard/interview', icon: FiVideo },
     { name: 'Flashcards', path: '/dashboard/flashcards', icon: FiBook },
     { name: 'Quiz', path: '/dashboard/quiz', icon: FiHelpCircle },
+    { name: 'Resume', path: '/dashboard/resume', icon: FiFile },
     { name: 'Analytics', path: '/dashboard/analytics', icon: FiBarChart2 },
     { name: 'Group Discussion', path: '/dashboard/gd', icon: FiUsers },
     { name: 'Reports', path: '/dashboard/reports', icon: FiFileText },

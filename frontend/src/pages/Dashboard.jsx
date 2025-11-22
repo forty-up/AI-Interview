@@ -198,7 +198,7 @@ const Dashboard = () => {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link to="/interview" className="card hover:shadow-xl transition-shadow">
+        <Link to="/dashboard/interview" className="card hover:shadow-xl transition-shadow">
           <FiVideo className="w-8 h-8 text-primary-600 mb-3" />
           <h3 className="font-semibold text-lg">Practice Interview</h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
@@ -206,7 +206,7 @@ const Dashboard = () => {
           </p>
         </Link>
 
-        <Link to="/flashcards" className="card hover:shadow-xl transition-shadow">
+        <Link to="/dashboard/flashcards" className="card hover:shadow-xl transition-shadow">
           <FiBook className="w-8 h-8 text-green-600 mb-3" />
           <h3 className="font-semibold text-lg">Study Flashcards</h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
@@ -214,7 +214,7 @@ const Dashboard = () => {
           </p>
         </Link>
 
-        <Link to="/quiz" className="card hover:shadow-xl transition-shadow">
+        <Link to="/dashboard/quiz" className="card hover:shadow-xl transition-shadow">
           <FiHelpCircle className="w-8 h-8 text-yellow-600 mb-3" />
           <h3 className="font-semibold text-lg">Take a Quiz</h3>
           <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">

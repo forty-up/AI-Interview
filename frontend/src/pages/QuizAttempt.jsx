@@ -27,13 +27,13 @@ const QuizAttempt = () => {
     try {
       const response = await quizApi.getDetail(id)
       if (response.data.status === 'completed') {
-        navigate(`/quiz/${id}/result`)
+        navigate(`/dashboard/quiz/${id}/result`)
         return
       }
       setQuiz(response.data)
     } catch (error) {
       toast.error('Failed to load quiz')
-      navigate('/quiz')
+      navigate('/dashboard/quiz')
     } finally {
       setLoading(false)
     }
@@ -57,7 +57,7 @@ const QuizAttempt = () => {
         answers,
         time_taken_seconds: timer
       })
-      navigate(`/quiz/${id}/result`)
+      navigate(`/dashboard/quiz/${id}/result`)
     } catch (error) {
       toast.error('Failed to submit quiz')
     } finally {

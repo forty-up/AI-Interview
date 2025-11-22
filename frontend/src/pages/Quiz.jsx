@@ -48,7 +48,7 @@ const Quiz = () => {
     setGenerating(true)
     try {
       const response = await quizApi.generate(formData)
-      navigate(`/quiz/${response.data.quiz_id}`)
+      navigate(`/dashboard/quiz/${response.data.quiz_id}`)
     } catch (error) {
       toast.error('Failed to generate quiz')
     } finally {

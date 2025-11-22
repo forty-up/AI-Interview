@@ -22,6 +22,7 @@ import Analytics from './pages/Analytics'
 import GroupDiscussion from './pages/GroupDiscussion'
 import Profile from './pages/Profile'
 import Reports from './pages/Reports'
+import Resume from './pages/Resume'
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -84,6 +85,7 @@ function App() {
           <Route path="gd" element={<GroupDiscussion />} />
           <Route path="profile" element={<Profile />} />
           <Route path="reports" element={<Reports />} />
+          <Route path="resume" element={<Resume />} />
         </Route>
 
         {/* Catch all */}
