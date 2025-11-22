@@ -5,6 +5,7 @@ from ultralytics import YOLO
 import os
 import tempfile
 import librosa
+from tensorflow import keras
 
 # Suppress warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -33,6 +34,20 @@ class ProctoringService:
         except:
             self.yolo_model = None
             print("YOLO model not loaded. Phone detection disabled.")
+
+        # Initialize custom emotion detection model
+        try:
+            model_path = os.path.join(os.path.dirname(__file__), '..', '..', 'ResNet50_Final_Model_Complete.keras')
+            if os.path.exists(model_path):
+                self.emotion_model = keras.models.load_model(model_path)
+                self.emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
+                print("Custom emotion model loaded successfully")
+            else:
+                self.emotion_model = None
+                print(f"Emotion model not found at {model_path}")
+        except Exception as e:
+            self.emotion_model = None
+            print(f"Failed to load emotion model: {e}")
 
         # Eye gaze tracking landmarks
         self.LEFT_EYE = [362, 385, 387, 263, 373, 380]
@@ -194,15 +209,57 @@ class ProctoringService:
         return max(0, 100 - total_penalty)
 
     def analyze_emotion(self, frame):
-        """Analyze facial emotions using DeepFace or FER"""
+        """Analyze facial emotions using custom ResNet50 model"""
         try:
-            from deepface import DeepFace
+            # Use custom model if available
+            if self.emotion_model is not None:
+                # Preprocess frame for the model
+                # Detect face first
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+                faces = face_cascade.detectMultiScale(gray, 1.1, 4)
 
+                if len(faces) > 0:
+                    # Get the largest face
+                    x, y, w, h = max(faces, key=lambda f: f[2] * f[3])
+                    face_roi = frame[y:y+h, x:x+w]
+
+                    # Resize to model input size (typically 48x48 or 224x224 for ResNet)
+                    face_resized = cv2.resize(face_roi, (224, 224))
+                    face_normalized = face_resized / 255.0
+                    face_input = np.expand_dims(face_normalized, axis=0)
+
+                    # Predict
+                    predictions = self.emotion_model.predict(face_input, verbose=0)[0]
+
+                    # Get emotion with highest probability
+                    emotion_idx = np.argmax(predictions)
+                    dominant = self.emotion_labels[emotion_idx]
+                    confidence = float(predictions[emotion_idx] * 100)
+
+                    # Build emotions dict
+                    emotions = {label: float(pred * 100) for label, pred in zip(self.emotion_labels, predictions)}
+
+                    print(f"Emotion detected: {dominant} ({confidence:.1f}%)")
+
+                    # Calculate stress level
+                    stress_emotions = ['fear', 'angry', 'sad']
+                    stress_level = sum(emotions.get(e, 0) for e in stress_emotions)
+
+                    return {
+                        'emotions': emotions,
+                        'dominant_emotion': dominant,
+                        'stress_level': min(100, stress_level),
+                        'confidence_index': round(confidence, 1)
+                    }
+
+            # Fallback to DeepFace if custom model not available
+            from deepface import DeepFace
             result = DeepFace.analyze(
                 frame,
                 actions=['emotion'],
                 enforce_detection=False,
-                detector_backend='opencv'  # Faster and more reliable
+                detector_backend='opencv'
             )
 
             if isinstance(result, list):
@@ -210,13 +267,10 @@ class ProctoringService:
 
             emotions = result.get('emotion', {})
             dominant = result.get('dominant_emotion', 'neutral')
-
-            # Get the confidence for the dominant emotion
             dominant_confidence = emotions.get(dominant, 70)
 
-            print(f"Emotion detected: {dominant} ({dominant_confidence:.1f}%)")
+            print(f"Emotion detected (DeepFace): {dominant} ({dominant_confidence:.1f}%)")
 
-            # Map emotions to stress/confidence
             stress_emotions = ['fear', 'angry', 'sad']
             stress_level = sum(emotions.get(e, 0) for e in stress_emotions)
 
