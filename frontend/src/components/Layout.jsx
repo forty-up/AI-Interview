@@ -12,17 +12,17 @@ const Layout = () => {
   const location = useLocation()
 
   const navigation = [
-    { name: 'Dashboard', path: '/', icon: FiHome },
-    { name: 'Interview', path: '/interview', icon: FiVideo },
-    { name: 'Flashcards', path: '/flashcards', icon: FiBook },
-    { name: 'Quiz', path: '/quiz', icon: FiHelpCircle },
-    { name: 'Analytics', path: '/analytics', icon: FiBarChart2 },
-    { name: 'Group Discussion', path: '/gd', icon: FiUsers },
-    { name: 'Reports', path: '/reports', icon: FiFileText },
+    { name: 'Dashboard', path: '/dashboard', icon: FiHome },
+    { name: 'Interview', path: '/dashboard/interview', icon: FiVideo },
+    { name: 'Flashcards', path: '/dashboard/flashcards', icon: FiBook },
+    { name: 'Quiz', path: '/dashboard/quiz', icon: FiHelpCircle },
+    { name: 'Analytics', path: '/dashboard/analytics', icon: FiBarChart2 },
+    { name: 'Group Discussion', path: '/dashboard/gd', icon: FiUsers },
+    { name: 'Reports', path: '/dashboard/reports', icon: FiFileText },
   ]
 
   const isActive = (path) => {
-    if (path === '/') return location.pathname === '/'
+    if (path === '/dashboard') return location.pathname === '/dashboard'
     return location.pathname.startsWith(path)
   }
 
@@ -60,9 +60,9 @@ const Layout = () => {
         {/* User section */}
         <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <Link
-            to="/profile"
+            to="/dashboard/profile"
             className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-              isActive('/profile')
+              isActive('/dashboard/profile')
                 ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600'
                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}

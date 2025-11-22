@@ -39,7 +39,7 @@ const Register = () => {
         degree: formData.degree
       })
       toast.success('Account created successfully!')
-      navigate('/')
+      navigate('/dashboard')
     } catch (error) {
       toast.error(error.response?.data?.error || 'Registration failed')
     } finally {
